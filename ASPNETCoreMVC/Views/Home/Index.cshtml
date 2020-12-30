@@ -1,12 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<div class="container-fluid">
+﻿<div class="container-fluid">
     <input type="text" id="txtName" />
     <button type="button" id="btnGet">Get Current Time</button>
 </div>
@@ -19,8 +11,9 @@
                 url: "/home/AjaxMethod",
                 data: { "name": $("#txtName").val() },
                 success: function (response) {
-                    debugger;
-                    alert("Hello " + response.name + ", current date and time: " + response.dateTime);
+                    alert("Hello " + response.name +
+                        ", current date and time: " +
+                        response.dateTime);
                 },
                 failure: function (response) {
                     alert(response.responseText);
