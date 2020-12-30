@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ASPNETCoreMVC.Models.Employee>
+
+@{
+    ViewData["Title"] = "GetEmployees";
+}
+
+<h1>GetEmployees</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmpName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeptNo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmpName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeptNo)
+            </td>
+            <td>
+                <a href="#" class="btn btn-success" onclick="ViewEmployee(@item.Id)">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="modal fade" id="viewEmployee">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><a href="#" class="close" data-dismiss="modal">&times;</a></div>
+            <div class="modal-body" id="myModalBodyDiv">
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    ViewEmployee = function (empId) {
+        $.ajax({
+            type: "POST",
+            url: "/employees/getemployeebyid",
+            data: { id: empId },
+            success: function (result) {
+                $("#myModalBodyDiv").html(result);
+                $("#viewEmployee").modal("show");
+            }
+        });
+    }
+</script>

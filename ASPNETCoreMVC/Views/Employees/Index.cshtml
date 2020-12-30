@@ -1,0 +1,14 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form asp-controller="Employees" asp-action="Index" method="post">
+    <select name="SearchItem">
+        <option value="Id">Id</option>
+        <option value="EmpName">Employee Name</option>
+    </select>
+    <input type="text" name="SearchString" />
+    <button type="submit">Search</button>
+</form>

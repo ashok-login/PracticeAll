@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Test";
+}
+
+<h1>Test</h1>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Congratulations</strong> Department details saved successfully.
+    Click <a asp-controller="JQDepartments" asp-action="GetDepartment" asp-route-id="@ViewBag.Id">here</a> to get details
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ASPNETCoreMVC.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employee Ajax Search";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container-fluid">
+    <form asp-controller="Employees" asp-action="Index" method="post">
+        <select name="SearchItem">
+            <option value="Id">Id</option>
+            <option value="EmpName">Employee Name</option>
+        </select>
+        <input type="text" name="SearchString" />
+        <button type="submit" id="btnSearch">Search</button>
+        <br /><br />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Emp name</th>
+                    <th>Salary</th>
+                    <th>Dept.#</th>
+                </tr>
+            </thead>
+            <tbody id="SearchResults">
+                @*@foreach (var emp in Model)
+                {
+                    <tr>
+                        <td>@emp.Id</td><td>@emp.EmpName</td><td>@emp.Salary</td><td>@emp.DeptNo</td>
+                    </tr>
+                }*@
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/mylib/employee-ajax-search.js"></script>

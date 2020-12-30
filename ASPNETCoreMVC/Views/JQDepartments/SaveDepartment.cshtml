@@ -1,0 +1,66 @@
+﻿@model ASPNETCoreMVC.Models.Department
+@{
+    ViewData["Title"] = "Insert/Update Department Details";
+}
+<h3>@ViewData["Title"]</h3>
+@if (ViewBag.IsSuccess == true)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Congratulations</strong> Department details saved successfully.
+        Click <a asp-controller="JQDepartments" asp-action="GetDepartment" asp-route-id="@ViewBag.Id">here</a> to get details
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@*Begin: Copied this from getbootstrap.com website for Spinners*@
+<div class="spinner-grow" role="status" id="myLoader" style="display: none">
+    <span class="sr-only">Loading...</span>
+</div>
+@*End: Copied this from getbootstrap.com website for Spinners*@
+
+<form method="post" data-ajax="true" data-ajax-complete="myComplete"
+      data-ajax-success="mySuccess" data-ajax-failure="myFailure"
+      asp-action="SaveDepartment" asp-controller="JQDepartments"
+      data-ajax-loading="#myLoader">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Id" class="form-control"></label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DeptName" class="form-control"></label>
+        <input asp-for="DeptName" class="form-control" />
+        <span asp-validation-for="DeptName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Loc" class="form-control"></label>
+        <input asp-for="Loc" class="form-control" />
+        <span asp-validation-for="Loc" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save Department" class="btn btn-primary" />
+    </div>
+</form>
+
+@section scripts {
+    <script>
+        function myComplete(data) {
+            console.log(data);
+        }
+
+        function mySuccess(data) {
+            console.log(data);
+        }
+
+        function myFailure(data) {
+            console.log(data);
+        }
+    </script>
+}
