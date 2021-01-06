@@ -23,6 +23,12 @@ namespace ASPNETCoreMVC.Controllers
             return View();
         }
 
+        public JsonResult GetDepartments()
+        {
+            var departments = _bll.GetAll();
+            return Json(departments);
+        }
+
         public IActionResult GetDepartment(int id)
         {
             var department = _bll.GetDepartmentById(id);

@@ -1,41 +1,39 @@
 ﻿@model IEnumerable<ASPNETCoreMVC.Models.Department>
+<div id="departmentTable"></div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetDepartments")",
+            success: function (departmentsList) {
+                loadData(departmentsList);
+            },
+            error: function (errorResponse) {
+                alert(errorResponse);
+            }
+        });
+    });
 
-@{
-    ViewData["Title"] = "Index";
-}
+    function loadData(departments) {
+        var $table = $('<table/>').addClass('table table-bordered table-striped');
+        var $thead = $('<thead/>');
+        $thead.append('<th>Dept#</th><th>Dept name</th><th>Location</th><th></th>');
+        $table.append($thead);
+        $.each(departments, function (index, dept) {
+            var $tableRow = $('<tr></tr>');
+            $tableRow.append('<td>' + dept.id + '</td>');
+            $tableRow.append('<td>' + dept.deptName + '</td>');
+            $tableRow.append('<td>' + dept.loc + '</td>');
+            $tableRow.append('<td><a href="#" class="btn btn-success" onclick="showDepartmentDetails(' + dept.id + ')">Details</a></td>');
+            $table.append($tableRow);
+        });
+        $('#departmentTable').html($table);
+        return false;
+    }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DeptName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Loc)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeptName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Loc)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    showDepartmentDetails = function (id) {
+        alert(id);
+        return false;
+    }
+</script>

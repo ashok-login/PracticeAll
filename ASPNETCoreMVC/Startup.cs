@@ -4,8 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCoreMVC.BLL;
 using ASPNETCoreMVC.BLL.Contracts;
+using ASPNETCoreMVC.BLL.Northwind.Contracts;
+using ASPNETCoreMVC.BLL.Northwind.Implementations;
 using ASPNETCoreMVC.DAL;
 using ASPNETCoreMVC.DAL.Contracts;
+using ASPNETCoreMVC.DAL.Northwind.Contracts;
+using ASPNETCoreMVC.DAL.Northwind.Implementations;
+using ASPNETCoreMVC.Models.Northwind;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +38,10 @@ namespace ASPNETCoreMVC
             services.AddTransient<IDepartmentBLL, DepartmentBLL>();
             services.AddTransient<IEmployeeDAL, EmployeeDAL>();
             services.AddTransient<IEmployeeBLL, EmployeeBLL>();
-            //services.AddTransient
+
+            services.AddDbContext<NorthwindContext>(x => x.UseSqlServer(Configuration.GetConnectionString("NorthwindConnection")));
+            services.AddTransient<IProductsDAL, ProductsDAL>();
+            services.AddTransient<IProductsBLL, ProductsBLL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
