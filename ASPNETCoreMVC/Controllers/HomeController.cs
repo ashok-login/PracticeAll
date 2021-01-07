@@ -14,22 +14,49 @@ namespace ASPNETCoreMVC.Controllers
 {
     public class HomeController : Controller
     {
-        const int pageSize = 5;
         private readonly ILogger<HomeController> _logger;
         private readonly IProductsBLL _bll;
+        private readonly NorthwindContext _context;
         private readonly int _ProductsCount;
 
-        public HomeController(ILogger<HomeController> logger, IProductsBLL bll)
+        public HomeController(ILogger<HomeController> logger, IProductsBLL bll, NorthwindContext context)
         {
             _logger = logger;
+            _logger.LogDebug(1, "NLog injected into HomeController");
             _bll = bll ?? throw new ArgumentNullException(nameof(bll));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _ProductsCount = _bll.ProductsCount;
         }
 
-        public IActionResult Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
-           var pagedRecords = _bll.GetPagedProducts(pageNumber, pageSize).ToPagedList(pageNumber, pageSize);
+            _logger.LogInformation("HomeController/Index started");
+            //if(Request.Query.Count > 0)
+            //{ 
+            //    pageNumber = Convert.ToInt32(Request.Query["pageNumber"]);
+            //    pageSize = Convert.ToInt32(Request.Query["pageSize"]);
+            //}
+            var pagedRecords = await _context.Products.ToPagedListAsync(pageNumber, pageSize);
             return View(pagedRecords);
+        }
+
+        public IActionResult SupressError()
+        {
+            try
+            {
+                _logger.LogInformation("SupressError() method started.");
+                BurstHere();
+                _logger.LogInformation("SupressError() method completed.");
+            }
+            catch (Exception)
+            {
+            }
+            return View();
+        }
+
+        private void BurstHere()
+        {
+            throw new NotImplementedException();
         }
 
         [HttpPost]
